@@ -1,6 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-void main() {
+import 'models/pet.dart';
+import 'services/pet_service.dart';
+
+import 'screens/profile_screen.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Supabase.initialize(
+    url: 'https://hcohlvtsypqwroeeuzxl.supabase.co',
+    anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhjb2hsdnRzeXBxd3JvZWV1enhsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5NDEyNTgsImV4cCI6MjA5MDUxNzI1OH0.n0LCTV_7tfJAG2U3_eMXgRZFb8ZIdZLms_Fx_3wrQw4',
+  );
+
   runApp(const DrugApp());
 }
 
@@ -324,40 +337,43 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _openLostPetPage() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => const ServicePlaceholderPage(
-          title: 'Питомец потерялся',
-          text: 'Здесь будет инфа про потерявшегося питомца',
-        ),
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (_) => ServicePlaceholderPage(
+        title: 'Питомец потерялся',
+        text: 'Здесь будет инфа про потерявшегося питомца',
+        goToHomePage: goToHomePage,
       ),
-    );
-  }
+    ),
+  );
+}
 
-  void _openReminderPage() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => const ServicePlaceholderPage(
-          title: 'Защита от клещей',
-          text: 'Здесь будет инфа про защиту от клещей',
-        ),
+ void _openReminderPage() {
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (_) => ServicePlaceholderPage(
+        title: 'Защита от клещей',
+        text: 'Здесь будет инфа про защиту от клещей',
+        goToHomePage: goToHomePage,
       ),
-    );
-  }
+    ),
+  );
+}
 
   void _openServicePage(String title) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => ServicePlaceholderPage(
-          title: title,
-          text: 'Здесь будет инфа про $title',
-        ),
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (_) => ServicePlaceholderPage(
+        title: title,
+        text: 'Здесь будет инфа про $title',
+        goToHomePage: goToHomePage,
       ),
-    );
-  }
+    ),
+  );
+}
 
   @override
   Widget build(BuildContext context) {
@@ -498,7 +514,6 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       const SizedBox(height: 36),
-
                       GestureDetector(
                         onTap: _openAiAssistant,
                         child: Container(
@@ -561,9 +576,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                       ),
-
                       const SizedBox(height: 24),
-
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -630,9 +643,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ],
                       ),
-
                       const SizedBox(height: 20),
-
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -651,9 +662,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ],
                       ),
-
                       const SizedBox(height: 24),
-
                       SizedBox(
                         height: 122,
                         child: PageView(
@@ -706,9 +715,7 @@ class _HomePageState extends State<HomePage> {
                           ],
                         ),
                       ),
-
                       const SizedBox(height: 10),
-
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: List.generate(2, (index) {
@@ -726,9 +733,7 @@ class _HomePageState extends State<HomePage> {
                           );
                         }),
                       ),
-
                       const SizedBox(height: 72),
-
                       const Center(
                         child: Text(
                           'ЗДЕСЬ МОЖЕТ БЫТЬ\nВАША РЕКЛАМА',
@@ -955,280 +960,7 @@ class _SmallTile extends StatelessWidget {
 // 3 ЭКРАН — PROFILE
 // =======================
 
-class ProfilePage extends StatelessWidget {
-  const ProfilePage({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFFF5F7FB),
-      body: Column(
-        children: [
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsets.only(
-              top: 60,
-              left: 20,
-              right: 20,
-              bottom: 24,
-            ),
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Color(0xFF4F7CFF), Color(0xFF7EA2FF)],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-              borderRadius: BorderRadius.vertical(
-                bottom: Radius.circular(28),
-              ),
-            ),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: _topCircleIcon(Icons.arrow_back_ios_new_rounded),
-                    ),
-                    Row(
-                      children: [
-                        GestureDetector(
-                          onTap: () => goToHomePage(context),
-                          child: _topCircleIcon(Icons.home_rounded),
-                        ),
-                        const SizedBox(width: 10),
-                        _editButton(),
-                      ],
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20),
-                Container(
-                  width: 96,
-                  height: 96,
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.2),
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: Colors.white.withOpacity(0.35),
-                      width: 3,
-                    ),
-                  ),
-                  child: const Icon(
-                    Icons.pets_rounded,
-                    size: 46,
-                    color: Colors.white,
-                  ),
-                ),
-                const SizedBox(height: 16),
-                const Text(
-                  'Ричи 🐶',
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.white,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                const Text(
-                  '+7 999 123-45-67 · @drug_pet',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.white70,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 18),
-          Expanded(
-            child: ListView(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              children: [
-                _sectionCard(
-                  children: const [
-                    ProfileRow(
-                      icon: Icons.person_outline_rounded,
-                      title: 'Имя питомца',
-                      value: 'Ричи',
-                    ),
-                    Divider(height: 1),
-                    ProfileRow(
-                      icon: Icons.pets_outlined,
-                      title: 'Вид',
-                      value: 'Собака',
-                    ),
-                    Divider(height: 1),
-                    ProfileRow(
-                      icon: Icons.star_border_rounded,
-                      title: 'Порода',
-                      value: 'Корги',
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 16),
-                _sectionCard(
-                  children: const [
-                    ProfileRow(
-                      icon: Icons.monitor_weight_outlined,
-                      title: 'Вес',
-                      value: '12 кг',
-                    ),
-                    Divider(height: 1),
-                    ProfileRow(
-                      icon: Icons.cake_outlined,
-                      title: 'Возраст',
-                      value: '3 года',
-                    ),
-                    Divider(height: 1),
-                    ProfileRow(
-                      icon: Icons.straighten_rounded,
-                      title: 'Рост',
-                      value: '30 см',
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 16),
-                _sectionCard(
-                  children: const [
-                    ProfileRow(
-                      icon: Icons.favorite_border_rounded,
-                      title: 'Привычки',
-                      value: 'Любит прогулки и лакомства',
-                    ),
-                    Divider(height: 1),
-                    ProfileRow(
-                      icon: Icons.restaurant_menu_outlined,
-                      title: 'Питание',
-                      value: 'Сухой корм + лакомства',
-                    ),
-                    Divider(height: 1),
-                    ProfileRow(
-                      icon: Icons.local_hospital_outlined,
-                      title: 'Особенности',
-                      value: 'Нет аллергий',
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _sectionCard({required List<Widget> children}) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(22),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 14,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Column(children: children),
-    );
-  }
-
-  Widget _topCircleIcon(IconData icon) {
-    return Container(
-      width: 42,
-      height: 42,
-      decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.18),
-        shape: BoxShape.circle,
-      ),
-      child: Icon(icon, color: Colors.white),
-    );
-  }
-
-  Widget _editButton() {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-      decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.18),
-        borderRadius: BorderRadius.circular(18),
-      ),
-      child: const Text(
-        'Edit',
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 15,
-          fontWeight: FontWeight.w500,
-        ),
-      ),
-    );
-  }
-}
-
-class ProfileRow extends StatelessWidget {
-  final IconData icon;
-  final String title;
-  final String value;
-
-  const ProfileRow({
-    super.key,
-    required this.icon,
-    required this.title,
-    required this.value,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-      child: Row(
-        children: [
-          Container(
-            width: 38,
-            height: 38,
-            decoration: BoxDecoration(
-              color: const Color(0xFFEEF4FF),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Icon(icon, color: const Color(0xFF3B82F6), size: 20),
-          ),
-          const SizedBox(width: 14),
-          Expanded(
-            child: Text(
-              title,
-              style: const TextStyle(
-                fontSize: 16,
-                color: Color(0xFF111827),
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ),
-          const SizedBox(width: 12),
-          Flexible(
-            child: Text(
-              value,
-              textAlign: TextAlign.right,
-              style: const TextStyle(
-                fontSize: 15,
-                color: Colors.black54,
-              ),
-            ),
-          ),
-          const SizedBox(width: 8),
-          const Icon(
-            Icons.chevron_right_rounded,
-            color: Colors.black26,
-          ),
-        ],
-      ),
-    );
-  }
-}
 
 // =======================
 // DRAWER СТРАНИЦЫ
@@ -1680,123 +1412,3 @@ class _ChatMessage {
 // ЗАГЛУШКИ РАЗДЕЛОВ
 // =======================
 
-class ServicePlaceholderPage extends StatelessWidget {
-  final String title;
-  final String text;
-
-  const ServicePlaceholderPage({
-    super.key,
-    required this.title,
-    required this.text,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFFF7F9F7),
-      body: Column(
-        children: [
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsets.only(
-              top: 60,
-              left: 20,
-              right: 20,
-              bottom: 24,
-            ),
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Color(0xFF4F7CFF), Color(0xFF7EA2FF)],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-              borderRadius: BorderRadius.vertical(
-                bottom: Radius.circular(28),
-              ),
-            ),
-            child: Row(
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                    width: 42,
-                    height: 42,
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.18),
-                      shape: BoxShape.circle,
-                    ),
-                    child: const Icon(
-                      Icons.arrow_back_ios_new_rounded,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Text(
-                    title,
-                    style: const TextStyle(
-                      fontSize: 26,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 12),
-                GestureDetector(
-                  onTap: () => goToHomePage(context),
-                  child: Container(
-                    width: 42,
-                    height: 42,
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.18),
-                      shape: BoxShape.circle,
-                    ),
-                    child: const Icon(
-                      Icons.home_rounded,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            child: Center(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(24),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(24),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.05),
-                        blurRadius: 14,
-                        offset: const Offset(0, 4),
-                      ),
-                    ],
-                  ),
-                  child: Text(
-                    text,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      fontSize: 22,
-                      height: 1.35,
-                      fontWeight: FontWeight.w600,
-                      color: Color(0xFF2F333A),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
