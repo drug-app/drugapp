@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import '../models/pet.dart';
-import '../services/pet_service.dart';
+import '../../models/pet.dart';
+import '../../services/pet_service.dart';
 import 'create_pet_page.dart';
 
 class ProfilePage extends StatefulWidget {

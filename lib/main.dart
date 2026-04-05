@@ -4,7 +4,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'models/pet.dart';
 import 'services/pet_service.dart';
 
-import 'screens/profile_screen.dart';
+import 'screens/profile/profile_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
