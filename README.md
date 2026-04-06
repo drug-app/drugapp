@@ -1,18 +1,72 @@
-# drugapp
+# DRUG — приложение для владельцев животных 🐾
 
-A new Flutter project.
+DRUG — это экосистема для владельцев питомцев, объединяющая сервисы ухода, медицины и повседневной жизни в одном приложении.
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+## 🚀 Что делает приложение
 
-A few resources to get you started if this is your first Flutter project:
+- 🏥 Запись в ветеринарные клиники  
+- ✂️ Груминг и уход за питомцами  
+- 🐕 Догситтеры и выгул  
+- 🤖 AI-помощник (вопросы о здоровье, подбор услуг)  
+- 📍 Поиск мест, куда можно с питомцем  
+- 📋 Профиль питомца (медкарта, история услуг)  
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+---
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-My pet app MVP
+## 🧠 Идея
+
+Мы строим не просто сервис, а **единое пространство для владельцев животных**,  
+которое закрывает все задачи:
+
+- здоровье  
+- уход  
+- досуг  
+- покупки  
+
+---
+
+## 🛠️ Технологии
+
+- Flutter (мобильное приложение)
+- Supabase (база данных и backend)
+- Dart
+
+---
+
+## ▶️ Запуск проекта
+
+```bash
+flutter pub get
+flutter run
+
+---
+
+## 📱 Статус проекта
+
+🚧 MVP в разработке  
+Мы активно создаём первую версию приложения
+
+---
+
+## 🎯 Цель
+
+Сделать приложение, которым пользуются **каждый день** владельцы животных
+
+---
+
+## 👥 Команда
+
+Проект создаётся небольшой командой разработчиков и дизайнеров
+
+---
+
+## 🔮 Планы
+
+- Добавить онлайн-запись в клиники
+- Подключить груминг и догситтеров
+- Развить AI-помощника
+- Запустить маркетплейс товаров
+
+---

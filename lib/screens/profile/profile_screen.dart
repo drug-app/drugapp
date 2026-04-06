@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../models/pet.dart';
 import '../../services/pet_service.dart';
+import '../../widgets/pet_profile_header.dart';
 import 'create_pet_page.dart';
+import 'health_screen.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -244,97 +246,15 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ],
               ),
-              const SizedBox(height: 28),
-              Container(
-                width: 138,
-                height: 138,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    color: accent,
-                    width: 3,
-                  ),
-                ),
-                child: ClipOval(
-                  child: selectedPet!.photoUrl != null &&
-                          selectedPet!.photoUrl!.isNotEmpty
-                      ? Image.network(
-                          selectedPet!.photoUrl!,
-                          width: 138,
-                          height: 138,
-                          fit: BoxFit.cover,
-                        )
-                      : const Center(
-                          child: Text(
-                            'фото вашего\nпитомца',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 17,
-                              color: textDark,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                ),
+
+              PetProfileHeader(
+                pet: selectedPet!,
+                accent: accent,
+                textDark: textDark,
               ),
-              const SizedBox(height: 18),
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Text(
-                    'порода',
-                    style: TextStyle(
-                      fontSize: 15,
-                      color: textDark,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  Text(
-                    'кличка питомца',
-                    style: TextStyle(
-                      fontSize: 15,
-                      color: textDark,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  Text(
-                    'возраст',
-                    style: TextStyle(
-                      fontSize: 15,
-                      color: textDark,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Text(
-                    selectedPet!.breed ?? '—',
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: textDark,
-                    ),
-                  ),
-                  Text(
-                    selectedPet!.name,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: textDark,
-                    ),
-                  ),
-                  Text(
-                    selectedPet!.age != null ? '${selectedPet!.age} года' : '—',
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: textDark,
-                    ),
-                  ),
-                ],
-              ),
+
               const SizedBox(height: 22),
+
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.symmetric(
@@ -357,44 +277,108 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
               ),
+
               const SizedBox(height: 34),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+
+              Column(
                 children: [
-                  _ProfileActionButton(
-                    title: 'здоровье',
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => ServicePlaceholderPage(
-                            title: 'здоровье',
-                            text: 'Раздел здоровья питомца',
-                            goToHomePage: _goToHomePage,
-                          ),
-                        ),
-                      );
-                    },
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      _ProfileActionButton(
+                        title: 'здоровье',
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => HealthScreen(
+                                selectedPet: selectedPet!,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                      const SizedBox(width: 28),
+                      _ProfileActionButton(
+                        title: 'о питомце',
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => ServicePlaceholderPage(
+                                title: 'о питомце',
+                                text: 'Информация о питомце',
+                                goToHomePage: _goToHomePage,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ],
                   ),
-                  const SizedBox(width: 28),
-                  _ProfileActionButton(
-                    title: 'о питомце',
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => ServicePlaceholderPage(
-                            title: 'о питомце',
-                            text: 'Информация о питомце',
-                            goToHomePage: _goToHomePage,
-                          ),
+                  const SizedBox(height: 22),
+                  SizedBox(
+                    width: 240,
+                    height: 52,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF7CCFC4),
+                        foregroundColor: const Color(0xFF2F333A),
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18),
                         ),
-                      );
-                    },
+                      ),
+                      onPressed: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('История скоро появится'),
+                          ),
+                        );
+                      },
+                      child: const Text(
+                        'история',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  SizedBox(
+                    width: 240,
+                    height: 52,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF7CCFC4),
+                        foregroundColor: const Color(0xFF2F333A),
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18),
+                        ),
+                      ),
+                      onPressed: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Наши записи скоро появятся'),
+                          ),
+                        );
+                      },
+                      child: const Text(
+                        'наши записи',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
+
               const Spacer(),
+
               GestureDetector(
                 onTap: () async {
                   final Pet? updatedPet = await Navigator.push(
@@ -449,9 +433,28 @@ class _ProfileActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: onTap,
-      child: Text(title),
+    return SizedBox(
+      width: 132,
+      height: 92,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: const Color(0xFF7CCFC4),
+          foregroundColor: const Color(0xFF2F333A),
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(22),
+          ),
+        ),
+        onPressed: onTap,
+        child: Text(
+          title,
+          textAlign: TextAlign.center,
+          style: const TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ),
     );
   }
 }
