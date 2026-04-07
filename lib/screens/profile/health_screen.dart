@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../models/pet.dart';
 import '../../widgets/pet_profile_header.dart';
 import 'documents/documents_screen.dart';
+import 'package:drugapp/screens/profile/vaccines/vaccines_screen.dart';
 
 class HealthScreen extends StatelessWidget {
   final Pet selectedPet;
@@ -48,34 +49,37 @@ class HealthScreen extends StatelessWidget {
               const SizedBox(height: 34),
 
               SizedBox(
-                width: 250,
-                height: 58,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: buttonColor,
-                    foregroundColor: textDark,
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                  ),
-                  onPressed: () {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Прививки и обработки скоро появятся'),
-                      ),
-                    );
-                  },
-                  child: const Text(
-                    'прививки и обработки',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ),
-              ),
+  width: 250,
+  height: 58,
+  child: ElevatedButton(
+    style: ElevatedButton.styleFrom(
+      backgroundColor: buttonColor,
+      foregroundColor: textDark,
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+      ),
+    ),
+    onPressed: () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => VaccinesScreen(
+            selectedPet: selectedPet,
+          ),
+        ),
+      );
+    },
+    child: const Text(
+      'прививки и обработки',
+      textAlign: TextAlign.center,
+      style: TextStyle(
+        fontSize: 18,
+        fontWeight: FontWeight.w500,
+      ),
+    ),
+  ),
+),
 
               const SizedBox(height: 18),
 

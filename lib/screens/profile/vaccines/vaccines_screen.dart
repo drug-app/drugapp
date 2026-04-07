@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../models/pet.dart';
 import '../../../widgets/pet_profile_header.dart';
+import 'add_record_screen.dart';
 
 class VaccinesScreen extends StatelessWidget {
   final Pet selectedPet;
@@ -23,7 +24,6 @@ class VaccinesScreen extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(18, 16, 18, 24),
           child: Column(
             children: [
-              // 🔙 верх
               Row(
                 children: [
                   GestureDetector(
@@ -35,43 +35,69 @@ class VaccinesScreen extends StatelessWidget {
                     ),
                   ),
                   const Spacer(),
+                  GestureDetector(
+                    onTap: () {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Редактирование добавим следующим шагом'),
+                        ),
+                      );
+                    },
+                    child: const Text(
+                      'редактировать',
+                      style: TextStyle(
+                        fontSize: 13,
+                        color: textDark,
+                      ),
+                    ),
+                  ),
                 ],
               ),
-
-              // 🐶 хедер питомца
               PetProfileHeader(
                 pet: selectedPet,
                 accent: accent,
                 textDark: textDark,
               ),
-
               const SizedBox(height: 24),
-
-              // 🧠 заголовок
               const Text(
                 'ПРИВИВКИ И ОБРАБОТКИ',
+                textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.w700,
                   color: textDark,
                 ),
               ),
-
-              const SizedBox(height: 14),
-
-              // 📌 статус (пока заглушка)
-              const Text(
-                'статус:\nобработка через ...\nвакцинация через ...',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 14,
-                  color: textDark,
+              const SizedBox(height: 18),
+              GestureDetector(
+                onTap: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Подробный статус добавим следующим шагом'),
+                    ),
+                  );
+                },
+                child: Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(14),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(
+                      color: const Color(0xFFE8E8E8),
+                    ),
+                  ),
+                  child: const Text(
+                    'статус:\nпока пусто',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: textDark,
+                      height: 1.35,
+                    ),
+                  ),
                 ),
               ),
-
-              const SizedBox(height: 26),
-
-              // ➕ кнопки
+              const SizedBox(height: 28),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -95,17 +121,14 @@ class VaccinesScreen extends StatelessWidget {
                     onTap: () {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
-                          content: Text('Сканирование скоро будет'),
+                          content: Text('Сканирование документа добавим следующим шагом'),
                         ),
                       );
                     },
                   ),
                 ],
               ),
-
-              const SizedBox(height: 30),
-
-              // 🕘 история
+              const SizedBox(height: 34),
               const Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
@@ -117,17 +140,26 @@ class VaccinesScreen extends StatelessWidget {
                   ),
                 ),
               ),
-
-              const SizedBox(height: 16),
-
-              // пустое место
-              const Expanded(
-                child: Center(
-                  child: Text(
-                    'пока пусто',
-                    style: TextStyle(
-                      color: textDark,
-                      fontSize: 15,
+              const SizedBox(height: 14),
+              Expanded(
+                child: Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(18),
+                    border: Border.all(
+                      color: const Color(0xFFE8E8E8),
+                    ),
+                  ),
+                  child: const Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      'пока пусто',
+                      style: TextStyle(
+                        color: textDark,
+                        fontSize: 15,
+                      ),
                     ),
                   ),
                 ),
@@ -159,22 +191,34 @@ class _TopActionButton extends StatelessWidget {
       onTap: onTap,
       child: Column(
         children: [
-          Icon(
-            icon,
-            size: 34,
-            color: textDark,
+          Container(
+            width: 72,
+            height: 72,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(18),
+              border: Border.all(
+                color: const Color(0xFFE8E8E8),
+              ),
+            ),
+            child: Icon(
+              icon,
+              size: 34,
+              color: textDark,
+            ),
           ),
-          const SizedBox(height: 6),
+          const SizedBox(height: 10),
           Text(
             title,
             textAlign: TextAlign.center,
             style: const TextStyle(
               fontSize: 14,
               color: textDark,
+              height: 1.2,
             ),
           ),
         ],
       ),
     );
   }
-}
+}   
