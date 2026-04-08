@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../profile/profile_screen.dart';
+import '../../theme/app_text_styles.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -121,7 +122,6 @@ class _HomePageState extends State<HomePage> {
     const bg = Color(0xFFF7F9F7);
     const textDark = Color(0xFF2F333A);
     const aiBg = Color(0xFFDDF3F2);
-    const peach = Color(0xFFF2B7AD);
     const lostBorder = Color(0xFFE29AA0);
     const lostFill = Color(0xFFFFF7F7);
     const reminderBorder = Color(0xFFD7C8F4);
@@ -142,19 +142,17 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
+                Text(
                   'Меню',
-                  style: TextStyle(
+                  style: AppTextStyles.title.copyWith(
                     fontSize: 28,
-                    fontWeight: FontWeight.w700,
-                    color: Color(0xFF111827),
+                    color: const Color(0xFF111827),
                   ),
                 ),
                 const SizedBox(height: 8),
-                const Text(
+                Text(
                   'Основные разделы приложения',
-                  style: TextStyle(
-                    fontSize: 14,
+                  style: AppTextStyles.body.copyWith(
                     color: Colors.black54,
                   ),
                 ),
@@ -225,15 +223,14 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       const SizedBox(width: 12),
-                      const Expanded(
+                      Expanded(
                         child: Text(
                           'ВСЁ ЧТО НУЖНО ДЛЯ ВАШЕГО ДРУГА',
                           textAlign: TextAlign.center,
-                          style: TextStyle(
+                          style: AppTextStyles.title.copyWith(
+                            color: menuBlue,
                             fontSize: 15,
                             fontWeight: FontWeight.w600,
-                            color: menuBlue,
-                            height: 1.15,
                           ),
                         ),
                       ),
@@ -253,7 +250,6 @@ class _HomePageState extends State<HomePage> {
                     ],
                   ),
                   const SizedBox(height: 30),
-
                   GestureDetector(
                     onTap: _openAiAssistant,
                     child: Container(
@@ -273,9 +269,9 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ],
                       ),
-                      child: const Row(
+                      child: Row(
                         children: [
-                          SizedBox(
+                          const SizedBox(
                             width: 64,
                             child: Center(
                               child: Icon(
@@ -285,24 +281,24 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                           ),
-                          SizedBox(width: 10),
+                          const SizedBox(width: 10),
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
                                   'ВАШ ХВОСТАТЫЙ ИИ ПОМОЩНИК',
-                                  style: TextStyle(
+                                  style: AppTextStyles.subtitle.copyWith(
                                     fontSize: 17,
                                     fontWeight: FontWeight.w800,
                                     color: textDark,
                                     height: 1.1,
                                   ),
                                 ),
-                                SizedBox(height: 8),
+                                const SizedBox(height: 8),
                                 Text(
                                   '— где погулять с собакой рядом?\n— лови подборку мест',
-                                  style: TextStyle(
+                                  style: AppTextStyles.body.copyWith(
                                     fontSize: 14,
                                     color: textDark,
                                     height: 1.25,
@@ -316,9 +312,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ),
-
                   const SizedBox(height: 28),
-
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -330,7 +324,12 @@ class _HomePageState extends State<HomePage> {
                             children: [
                               Container(
                                 margin: const EdgeInsets.only(top: 16),
-                                padding: const EdgeInsets.fromLTRB(20, 22, 18, 18),
+                                padding: const EdgeInsets.fromLTRB(
+                                  20,
+                                  22,
+                                  18,
+                                  18,
+                                ),
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   border: Border.all(
@@ -339,9 +338,9 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                   borderRadius: BorderRadius.circular(22),
                                 ),
-                                child: const Text(
+                                child: Text(
                                   'не забудьте защититься\nот клещей',
-                                  style: TextStyle(
+                                  style: AppTextStyles.body.copyWith(
                                     fontSize: 16,
                                     height: 1.25,
                                     fontWeight: FontWeight.w500,
@@ -366,7 +365,7 @@ class _HomePageState extends State<HomePage> {
                                   child: Container(
                                     width: 20,
                                     height: 20,
-                                    decoration: BoxDecoration(
+                                    decoration: const BoxDecoration(
                                       color: Colors.white,
                                       border: Border(
                                         left: BorderSide(
@@ -400,13 +399,13 @@ class _HomePageState extends State<HomePage> {
                               width: 2,
                             ),
                           ),
-                          child: const Center(
+                          child: Center(
                             child: Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 12),
+                              padding: const EdgeInsets.symmetric(horizontal: 12),
                               child: Text(
                                 'питомец\nпотерялся',
                                 textAlign: TextAlign.center,
-                                style: TextStyle(
+                                style: AppTextStyles.subtitle.copyWith(
                                   fontSize: 16,
                                   height: 1.2,
                                   fontWeight: FontWeight.w600,
@@ -419,9 +418,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ],
                   ),
-
                   const SizedBox(height: 34),
-
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -443,9 +440,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ],
                   ),
-
                   const SizedBox(height: 24),
-
                   Wrap(
                     spacing: 16,
                     runSpacing: 18,
@@ -483,17 +478,15 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ],
                   ),
-
                   const SizedBox(height: 48),
-
-                  const Center(
+                  Center(
                     child: Text(
                       'ЗДЕСЬ МОЖЕТ БЫТЬ\nВАША РЕКЛАМА',
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: AppTextStyles.title.copyWith(
                         fontSize: 30,
-                        height: 1.08,
                         fontWeight: FontWeight.w500,
+                        height: 1.08,
                         color: textDark,
                       ),
                     ),
@@ -540,7 +533,10 @@ class _HomePageState extends State<HomePage> {
                   color: const Color(0xFFEEF4FF),
                   borderRadius: BorderRadius.circular(14),
                 ),
-                child: Icon(icon, color: const Color(0xFF3B82F6)),
+                child: Icon(
+                  icon,
+                  color: const Color(0xFF3B82F6),
+                ),
               ),
               const SizedBox(width: 14),
               Expanded(
@@ -549,16 +545,15 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     Text(
                       title,
-                      style: const TextStyle(
+                      style: AppTextStyles.subtitle.copyWith(
                         fontSize: 17,
-                        fontWeight: FontWeight.w600,
-                        color: Color(0xFF111827),
+                        color: const Color(0xFF111827),
                       ),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       subtitle,
-                      style: const TextStyle(
+                      style: AppTextStyles.body.copyWith(
                         fontSize: 13,
                         color: Colors.black54,
                         height: 1.35,
@@ -610,8 +605,6 @@ class _BigTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const peach = Color(0xFFF2B7AD);
-    const textDark = Color(0xFF2F333A);
-
     return SizedBox(
       width: width,
       child: Column(
@@ -633,11 +626,8 @@ class _BigTile extends StatelessWidget {
             child: Text(
               label,
               textAlign: TextAlign.center,
-              style: const TextStyle(
+              style: AppTextStyles.caption.copyWith(
                 fontSize: 14,
-                height: 1.12,
-                fontWeight: FontWeight.w500,
-                color: textDark,
               ),
             ),
           ),
@@ -661,7 +651,6 @@ class _SmallTileNew extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const peach = Color(0xFFF2B7AD);
-    const textDark = Color(0xFF2F333A);
 
     return SizedBox(
       width: width,
@@ -684,11 +673,8 @@ class _SmallTileNew extends StatelessWidget {
             child: Text(
               label,
               textAlign: TextAlign.center,
-              style: const TextStyle(
+              style: AppTextStyles.caption.copyWith(
                 fontSize: 13,
-                height: 1.1,
-                fontWeight: FontWeight.w500,
-                color: textDark,
               ),
             ),
           ),
@@ -757,9 +743,8 @@ class ServicePlaceholderPage extends StatelessWidget {
                 Expanded(
                   child: Text(
                     title,
-                    style: const TextStyle(
+                    style: AppTextStyles.title.copyWith(
                       fontSize: 26,
-                      fontWeight: FontWeight.w700,
                       color: Colors.white,
                     ),
                   ),
@@ -804,11 +789,11 @@ class ServicePlaceholderPage extends StatelessWidget {
                   child: Text(
                     text,
                     textAlign: TextAlign.center,
-                    style: const TextStyle(
+                    style: AppTextStyles.subtitle.copyWith(
                       fontSize: 22,
                       height: 1.35,
                       fontWeight: FontWeight.w600,
-                      color: Color(0xFF2F333A),
+                      color: const Color(0xFF2F333A),
                     ),
                   ),
                 ),
