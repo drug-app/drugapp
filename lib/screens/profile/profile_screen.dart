@@ -5,6 +5,10 @@ import '../../services/pet_service.dart';
 import '../../widgets/pet_profile_header.dart';
 import 'create_pet_page.dart';
 import 'health_screen.dart';
+import 'pet_info_screen.dart';
+import 'history_screen.dart';
+import 'our_records_screen.dart';
+import 'owner_contacts_screen.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -246,15 +250,12 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ],
               ),
-
               PetProfileHeader(
                 pet: selectedPet!,
                 accent: accent,
                 textDark: textDark,
               ),
-
               const SizedBox(height: 22),
-
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.symmetric(
@@ -277,9 +278,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
               ),
-
               const SizedBox(height: 34),
-
               Column(
                 children: [
                   Row(
@@ -305,10 +304,9 @@ class _ProfilePageState extends State<ProfilePage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (_) => ServicePlaceholderPage(
-                                title: 'о питомце',
-                                text: 'Информация о питомце',
-                                goToHomePage: _goToHomePage,
+                              builder: (_) => PetInfoScreen(
+                                selectedPet: selectedPet!,
+                                onChangePet: _showPetSwitcher,
                               ),
                             ),
                           );
@@ -330,9 +328,12 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                       ),
                       onPressed: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('История скоро появится'),
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => HistoryScreen(
+                              selectedPet: selectedPet!,
+                            ),
                           ),
                         );
                       },
@@ -359,9 +360,10 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                       ),
                       onPressed: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Наши записи скоро появятся'),
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const OurRecordsScreen(),
                           ),
                         );
                       },
@@ -374,11 +376,43 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                     ),
                   ),
+                  const SizedBox(height: 18),
+                  SizedBox(
+                    width: 270,
+                    height: 52,
+                    child: OutlinedButton(
+                      style: OutlinedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        foregroundColor: const Color(0xFF2F333A),
+                        side: const BorderSide(
+                          color: Color(0xFFF2D8D1),
+                          width: 1.4,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18),
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const OwnerContactsScreen(),
+                          ),
+                        );
+                      },
+                      child: const Text(
+                        'контактные данные хозяина',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
-
               const Spacer(),
-
               GestureDetector(
                 onTap: () async {
                   final Pet? updatedPet = await Navigator.push(
