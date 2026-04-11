@@ -4,8 +4,18 @@ import '../models/pet.dart';
 class PetService {
   final SupabaseClient supabase = Supabase.instance.client;
 
+  String _requireUserId() {
+    final user = supabase.auth.currentUser;
+
+    if (user == null) {
+      throw Exception('Пользователь не авторизован');
+    }
+
+    return user.id;
+  }
+
   Future<List<Pet>> getPets() async {
-    final userId = '7244f9ca-4e6b-4bff-9732-1c34570b9dac';
+    final userId = _requireUserId();
 
     final data = await supabase
         .from('pets')
@@ -26,7 +36,7 @@ class PetService {
     String? notes,
     String? photoUrl,
   }) async {
-    final userId = '7244f9ca-4e6b-4bff-9732-1c34570b9dac';
+    final userId = _requireUserId();
 
     final data = await supabase
         .from('pets')
@@ -57,6 +67,8 @@ class PetService {
     String? notes,
     String? photoUrl,
   }) async {
+    final userId = _requireUserId();
+
     final data = await supabase
         .from('pets')
         .update({
@@ -69,6 +81,7 @@ class PetService {
           'photo_url': photoUrl,
         })
         .eq('id', id)
+        .eq('owner_id', userId)
         .select()
         .single();
 
