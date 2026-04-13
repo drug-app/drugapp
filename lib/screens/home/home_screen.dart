@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../profile/profile_screen.dart';
 import '../../theme/app_text_styles.dart';
+import '../grooming/grooming_start_screen.dart';
+import '../dog_sitter/dog_sitter_screen.dart';
+import '../ai/ai_screen.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -22,6 +25,23 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+void _openGrooming() {
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (_) => const GroomingStartScreen(),
+    ),
+  );
+}
+
+void _openDogSitter() {
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (_) => const DogSitterScreen(),
+    ),
+  );
+}
   void _openSupportPage() {
     Navigator.push(
       context,
@@ -65,10 +85,7 @@ class _HomePageState extends State<HomePage> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (_) => ServicePlaceholderPage(
-          title: 'ИИ помощник',
-          text: 'Здесь будет экран ИИ помощника',
-          goToHomePage: _goToHomePage,
+        builder: (_) => AiScreen(),
         ),
       ),
     );
@@ -436,7 +453,7 @@ class _HomePageState extends State<HomePage> {
                       _BigTile(
                         width: bigTileWidth,
                         label: 'дог-ситеры/выгул',
-                        onTap: () => _openServicePage('дог-ситеры/выгул'),
+                        onTap: _openDogSitter,
                       ),
                     ],
                   ),
@@ -449,7 +466,7 @@ class _HomePageState extends State<HomePage> {
                       _SmallTileNew(
                         width: smallTileWidth,
                         label: 'грумминг',
-                        onTap: () => _openServicePage('грумминг'),
+                        onTap: _openGrooming,
                       ),
                       _SmallTileNew(
                         width: smallTileWidth,

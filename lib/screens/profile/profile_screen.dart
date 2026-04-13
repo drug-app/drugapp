@@ -171,40 +171,66 @@ class _ProfilePageState extends State<ProfilePage> {
     if (selectedPet == null) {
       return Scaffold(
         backgroundColor: bg,
-        body: Center(
-          child: GestureDetector(
-            onTap: () async {
-              final Pet? newPet = await Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => const CreatePetPage(),
+        body: SafeArea(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(18, 16, 18, 0),
+                child: Row(
+                  children: [
+                    GestureDetector(
+                      onTap: () => Navigator.pop(context),
+                      child: const Icon(
+                        Icons.arrow_back_rounded,
+                        size: 34,
+                        color: accent,
+                      ),
+                    ),
+                  ],
                 ),
-              );
+              ),
+              Expanded(
+                child: Center(
+                  child: GestureDetector(
+                    onTap: () async {
+                      final Pet? newPet = await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const CreatePetPage(),
+                        ),
+                      );
 
-              if (newPet != null) {
-                setState(() {
-                  pets = [newPet];
-                  selectedPet = newPet;
-                });
-              } else {
-                _loadPets();
-              }
-            },
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 14),
-              decoration: BoxDecoration(
-                color: accent,
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: const Text(
-                'Добавить питомца',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
+                      if (newPet != null) {
+                        setState(() {
+                          pets = [newPet];
+                          selectedPet = newPet;
+                        });
+                      } else {
+                        _loadPets();
+                      }
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 22,
+                        vertical: 14,
+                      ),
+                      decoration: BoxDecoration(
+                        color: accent,
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: const Text(
+                        'Добавить питомца',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
               ),
-            ),
+            ],
           ),
         ),
       );
