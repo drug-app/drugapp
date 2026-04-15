@@ -7,6 +7,7 @@ import '../dog_sitter/dog_sitter_screen.dart';
 import '../ai/ai_screen.dart';
 import '../places/where_with_pet_screen.dart';
 import '../training/training_screen.dart';
+import '../lost_pet/lost_pet_screen.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -115,11 +116,7 @@ void _openTraining() {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (_) => ServicePlaceholderPage(
-          title: 'Питомец потерялся',
-          text: 'Здесь будет экран с потерявшимся питомцем',
-          goToHomePage: _goToHomePage,
-        ),
+        builder: (_) => const LostPetScreen(),
       ),
     );
   }
