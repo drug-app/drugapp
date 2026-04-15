@@ -5,6 +5,8 @@ import '../../theme/app_text_styles.dart';
 import '../grooming/grooming_start_screen.dart';
 import '../dog_sitter/dog_sitter_screen.dart';
 import '../ai/ai_screen.dart';
+import '../places/where_with_pet_screen.dart';
+import '../training/training_screen.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -42,6 +44,25 @@ void _openDogSitter() {
     ),
   );
 }
+
+void _openWhereWithPet() {
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (_) => const WhereWithPetScreen(),
+    ),
+  );
+}
+
+void _openTraining() {
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (_) => const TrainingScreen(),
+    ),
+  );
+}
+
   void _openSupportPage() {
     Navigator.push(
       context,
@@ -86,7 +107,6 @@ void _openDogSitter() {
       context,
       MaterialPageRoute(
         builder: (_) => AiScreen(),
-        ),
       ),
     );
   }
@@ -448,7 +468,7 @@ void _openDogSitter() {
                       _BigTile(
                         width: bigTileWidth,
                         label: 'куда с питомцем',
-                        onTap: () => _openServicePage('куда с питомцем'),
+                        onTap: _openWhereWithPet,
                       ),
                       _BigTile(
                         width: bigTileWidth,
@@ -476,7 +496,7 @@ void _openDogSitter() {
                       _SmallTileNew(
                         width: smallTileWidth,
                         label: 'дрессировка',
-                        onTap: () => _openServicePage('дрессировка'),
+                        onTap: _openTraining,
                       ),
                       _SmallTileNew(
                         width: smallTileWidth,
