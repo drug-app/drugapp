@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AiScreen extends StatefulWidget {
   const AiScreen({super.key});
@@ -9,16 +10,75 @@ class AiScreen extends StatefulWidget {
 
 class _AiScreenState extends State<AiScreen> {
   final TextEditingController _controller = TextEditingController();
-  final List<String> _messages = [];
+  final List<Map<String, String>> _messages = [];
+  static const String _petContext = 'У пользователя собака, 7 месяцев.';
 
-  void _sendMessage() {
+  bool _isLoading = false;
+
+  Future<void> _sendMessage() async {
     final text = _controller.text.trim();
-    if (text.isEmpty) return;
+    if (text.isEmpty || _isLoading) return;
+
+    final history = _messages
+        .map(
+          (message) => {
+            'role': message['role'] == 'ai' ? 'assistant' : 'user',
+            'text': message['text'] ?? '',
+          },
+        )
+        .where((message) => (message['text'] ?? '').trim().isNotEmpty)
+        .toList();
 
     setState(() {
-      _messages.add(text);
+      _messages.add({
+        'role': 'user',
+        'text': text,
+      });
       _controller.clear();
+      _isLoading = true;
     });
+
+    try {
+      final res = await Supabase.instance.client.functions.invoke(
+        'ai-chat',
+        body: {
+          'message': text,
+          'petContext': _petContext,
+          'history': history,
+        },
+      );
+
+      final data = res.data;
+      String reply = 'Пока не удалось получить ответ.';
+
+      if (data is Map && data['reply'] != null) {
+        reply = data['reply'].toString();
+      }
+
+      if (!mounted) return;
+
+      setState(() {
+        _messages.add({
+          'role': 'ai',
+          'text': reply,
+        });
+      });
+    } catch (_) {
+      if (!mounted) return;
+
+      setState(() {
+        _messages.add({
+          'role': 'ai',
+          'text': 'Не удалось получить ответ. Попробуйте ещё раз.',
+        });
+      });
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
   }
 
   @override
@@ -82,7 +142,7 @@ class _AiScreenState extends State<AiScreen> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(
-                              'ВАШ ХВОСТАТЫЙ ИИ ПОМОЩНИК',
+                              'Спроси что-нибудь\nпро питомца',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 22,
@@ -107,27 +167,28 @@ class _AiScreenState extends State<AiScreen> {
                     )
                   : ListView.builder(
                       padding: const EdgeInsets.fromLTRB(18, 12, 18, 12),
-                      itemCount: _messages.length,
+                      itemCount: _messages.length + (_isLoading ? 1 : 0),
                       itemBuilder: (context, index) {
+                        if (index == _messages.length) {
+                          return const Align(
+                            alignment: Alignment.centerLeft,
+                            child: _MessageBubble(
+                              text: 'Печатаю ответ...',
+                              isUser: false,
+                            ),
+                          );
+                        }
+
+                        final message = _messages[index];
+                        final isUser = message['role'] == 'user';
+
                         return Align(
-                          alignment: Alignment.centerRight,
-                          child: Container(
-                            margin: const EdgeInsets.only(bottom: 10),
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 14,
-                              vertical: 12,
-                            ),
-                            decoration: BoxDecoration(
-                              color: aiBg,
-                              borderRadius: BorderRadius.circular(18),
-                            ),
-                            child: Text(
-                              _messages[index],
-                              style: const TextStyle(
-                                fontSize: 15,
-                                color: textDark,
-                              ),
-                            ),
+                          alignment: isUser
+                              ? Alignment.centerRight
+                              : Alignment.centerLeft,
+                          child: _MessageBubble(
+                            text: message['text'] ?? '',
+                            isUser: isUser,
                           ),
                         );
                       },
@@ -144,7 +205,7 @@ class _AiScreenState extends State<AiScreen> {
                         borderRadius: BorderRadius.circular(24),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.05),
+                            color: Colors.black.withValues(alpha: 0.05),
                             blurRadius: 10,
                             offset: const Offset(0, 4),
                           ),
@@ -176,12 +237,14 @@ class _AiScreenState extends State<AiScreen> {
                     child: Container(
                       width: 48,
                       height: 48,
-                      decoration: const BoxDecoration(
-                        color: textDark,
+                      decoration: BoxDecoration(
+                        color: _isLoading ? Colors.black26 : textDark,
                         shape: BoxShape.circle,
                       ),
-                      child: const Icon(
-                        Icons.arrow_upward_rounded,
+                      child: Icon(
+                        _isLoading
+                            ? Icons.hourglass_top_rounded
+                            : Icons.arrow_upward_rounded,
                         color: Colors.white,
                       ),
                     ),
@@ -190,6 +253,53 @@ class _AiScreenState extends State<AiScreen> {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class _MessageBubble extends StatelessWidget {
+  final String text;
+  final bool isUser;
+
+  const _MessageBubble({
+    required this.text,
+    required this.isUser,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    const userBg = Color(0xFFDDF3F2);
+    const aiBg = Colors.white;
+    const textDark = Color(0xFF2F333A);
+
+    return Container(
+      margin: const EdgeInsets.only(bottom: 10),
+      padding: const EdgeInsets.symmetric(
+        horizontal: 14,
+        vertical: 12,
+      ),
+      constraints: const BoxConstraints(maxWidth: 280),
+      decoration: BoxDecoration(
+        color: isUser ? userBg : aiBg,
+        borderRadius: BorderRadius.circular(18),
+        boxShadow: isUser
+            ? null
+            : [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.05),
+                  blurRadius: 10,
+                  offset: const Offset(0, 4),
+                ),
+              ],
+      ),
+      child: Text(
+        text,
+        style: const TextStyle(
+          fontSize: 15,
+          color: textDark,
+          height: 1.35,
         ),
       ),
     );
