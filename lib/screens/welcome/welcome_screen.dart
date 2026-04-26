@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../services/auth_service.dart';
@@ -147,91 +146,82 @@ class _WelcomePageState extends State<WelcomePage> {
                   child: _showIntro
                       ? ConstrainedBox(
                           key: const ValueKey('welcome_intro'),
-                          constraints: const BoxConstraints(maxWidth: 380),
-                          child: Container(
-                            width: double.infinity,
-                            padding: const EdgeInsets.fromLTRB(22, 24, 22, 24),
-                            decoration: BoxDecoration(
-                              color: Colors.white.withValues(alpha: 0.94),
-                              borderRadius: BorderRadius.circular(34),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withValues(alpha: 0.10),
-                                  blurRadius: 28,
-                                  offset: const Offset(0, 14),
+                          constraints: const BoxConstraints(maxWidth: 430),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                width: 96,
+                                height: 4,
+                                decoration: BoxDecoration(
+                                  color: Colors.white.withValues(alpha: 0.35),
+                                  borderRadius: BorderRadius.circular(999),
                                 ),
-                              ],
-                            ),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(28),
-                                  child: SizedBox(
-                                    width: double.infinity,
-                                    height: 300,
-                                    child: Image.asset(
-                                      'assets/images/welcome_dog.png',
-                                      fit: BoxFit.cover,
-                                      alignment: Alignment.center,
-                                    ),
+                              ),
+                              const SizedBox(height: 26),
+                              Text(
+                                'ДРУГ',
+                                style: AppTextStyles.caption.copyWith(
+                                  fontSize: 14,
+                                  letterSpacing: 3.2,
+                                  color: Colors.white.withValues(alpha: 0.72),
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                              const SizedBox(height: 22),
+                              Text(
+                                'Добро пожаловать\nв место, где есть всё\nдля твоего любимого друга',
+                                style: AppTextStyles.title.copyWith(
+                                  fontSize: 38,
+                                  height: 1.08,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w800,
+                                ),
+                              ),
+                              const SizedBox(height: 22),
+                              Text(
+                                'Сервисы, записи, история питомца и помощь в одном приложении. Всё под рукой и без лишних шагов.',
+                                style: AppTextStyles.body.copyWith(
+                                  fontSize: 17,
+                                  height: 1.5,
+                                  color: Colors.white.withValues(alpha: 0.82),
+                                ),
+                              ),
+                              const SizedBox(height: 34),
+                              TextButton(
+                                onPressed: () {
+                                  setState(() {
+                                    _showIntro = false;
+                                  });
+                                },
+                                style: TextButton.styleFrom(
+                                  foregroundColor: Colors.white,
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 0,
+                                    vertical: 8,
                                   ),
                                 ),
-                                const SizedBox(height: 26),
-                                Text(
-                                  'добро пожаловать\nв место, где есть всё\nдля твоего любимого\nдруга',
-                                  textAlign: TextAlign.center,
-                                  style: GoogleFonts.caveat(
-                                    fontSize: 34,
-                                    fontWeight: FontWeight.w700,
-                                    color: darkText,
-                                    height: 1.02,
-                                  ),
-                                ),
-                                const SizedBox(height: 28),
-                                SizedBox(
-                                  width: double.infinity,
-                                  height: 56,
-                                  child: DecoratedBox(
-                                    decoration: BoxDecoration(
-                                      gradient: const LinearGradient(
-                                        colors: [
-                                          Color(0xFF67C7FF),
-                                          Color(0xFF6A73FF),
-                                        ],
-                                        begin: Alignment.centerLeft,
-                                        end: Alignment.centerRight,
-                                      ),
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
-                                    child: ElevatedButton(
-                                      onPressed: () {
-                                        setState(() {
-                                          _showIntro = false;
-                                        });
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: Colors.transparent,
-                                        foregroundColor: Colors.white,
-                                        shadowColor: Colors.transparent,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                        ),
-                                      ),
-                                      child: Text(
-                                        'АВТОРИЗОВАТЬСЯ',
-                                        style: AppTextStyles.button.copyWith(
-                                          color: Colors.white,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w700,
-                                        ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      'Продолжить',
+                                      style: AppTextStyles.button.copyWith(
+                                        color: Colors.white,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w700,
                                       ),
                                     ),
-                                  ),
+                                    const SizedBox(width: 10),
+                                    const Icon(
+                                      Icons.arrow_forward_rounded,
+                                      size: 20,
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         )
                       : SingleChildScrollView(
