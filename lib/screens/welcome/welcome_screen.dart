@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../services/auth_service.dart';
@@ -81,7 +82,8 @@ class _WelcomePageState extends State<WelcomePage> {
     setState(() => _isLoading = true);
 
     try {
-      await _authService.signInAnonymously();
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('guest_mode', true);
 
       if (!mounted) return;
 
@@ -91,10 +93,8 @@ class _WelcomePageState extends State<WelcomePage> {
           builder: (_) => const HomePage(),
         ),
       );
-    } on AuthException catch (e) {
-      _show(e.message);
     } catch (e) {
-      _show('Ошибка гостевого входа: $e');
+      _show('Ошибка: $e');
     } finally {
       if (mounted) {
         setState(() => _isLoading = false);

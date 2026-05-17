@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../home/home_screen.dart';
-import '../welcome/welcome_screen.dart';
 
 class AuthGate extends StatelessWidget {
   const AuthGate({super.key});
@@ -11,17 +10,12 @@ class AuthGate extends StatelessWidget {
   Widget build(BuildContext context) {
     final supabase = Supabase.instance.client;
 
-    return StreamBuilder<AuthState>(
-      stream: supabase.auth.onAuthStateChange,
-      builder: (context, snapshot) {
-        final session = supabase.auth.currentSession;
+    // Если уже есть активная сессия — сразу на главный экран
+    if (supabase.auth.currentSession != null) {
+      return const HomePage();
+    }
 
-        if (session != null) {
-          return const HomePage();
-        }
-
-        return const WelcomePage();
-      },
-    );
+    // Без сессии тоже сразу на главный экран (гостевой режим)
+    return const HomePage();
   }
 }

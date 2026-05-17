@@ -5,9 +5,8 @@ import '../../theme/app_text_styles.dart';
 import '../grooming/grooming_start_screen.dart';
 import '../dog_sitter/dog_sitter_screen.dart';
 import '../ai/ai_screen.dart';
-import '../places/where_with_pet_screen.dart';
-import '../training/training_screen.dart';
 import '../lost_pet/lost_pet_screen.dart';
+import '../training/training_screen.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -45,25 +44,6 @@ void _openDogSitter() {
     ),
   );
 }
-
-void _openWhereWithPet() {
-  Navigator.push(
-    context,
-    MaterialPageRoute(
-      builder: (_) => const WhereWithPetScreen(),
-    ),
-  );
-}
-
-void _openTraining() {
-  Navigator.push(
-    context,
-    MaterialPageRoute(
-      builder: (_) => const TrainingScreen(),
-    ),
-  );
-}
-
   void _openSupportPage() {
     Navigator.push(
       context,
@@ -117,6 +97,15 @@ void _openTraining() {
       context,
       MaterialPageRoute(
         builder: (_) => const LostPetScreen(),
+      ),
+    );
+  }
+
+  void _openTrainingPage() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => const TrainingScreen(),
       ),
     );
   }
@@ -297,7 +286,7 @@ void _openTraining() {
                         borderRadius: BorderRadius.circular(28),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.08),
+                            color: Colors.black.withValues(alpha: 0.08),
                             blurRadius: 10,
                             offset: const Offset(0, 4),
                           ),
@@ -465,7 +454,7 @@ void _openTraining() {
                       _BigTile(
                         width: bigTileWidth,
                         label: 'куда с питомцем',
-                        onTap: _openWhereWithPet,
+                        onTap: () => _openServicePage('куда с питомцем'),
                       ),
                       _BigTile(
                         width: bigTileWidth,
@@ -493,7 +482,7 @@ void _openTraining() {
                       _SmallTileNew(
                         width: smallTileWidth,
                         label: 'дрессировка',
-                        onTap: _openTraining,
+                        onTap: _openTrainingPage,
                       ),
                       _SmallTileNew(
                         width: smallTileWidth,
@@ -552,7 +541,7 @@ void _openTraining() {
             borderRadius: BorderRadius.circular(22),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.04),
+                color: Colors.black.withValues(alpha: 0.04),
                 blurRadius: 12,
                 offset: const Offset(0, 4),
               ),
@@ -764,7 +753,7 @@ class ServicePlaceholderPage extends StatelessWidget {
                     width: 42,
                     height: 42,
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.18),
+                      color: Colors.white.withValues(alpha: 0.18),
                       shape: BoxShape.circle,
                     ),
                     child: const Icon(
@@ -790,7 +779,7 @@ class ServicePlaceholderPage extends StatelessWidget {
                     width: 42,
                     height: 42,
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.18),
+                      color: Colors.white.withValues(alpha: 0.18),
                       shape: BoxShape.circle,
                     ),
                     child: const Icon(
@@ -814,7 +803,7 @@ class ServicePlaceholderPage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(24),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.05),
+                        color: Colors.black.withValues(alpha: 0.05),
                         blurRadius: 14,
                         offset: const Offset(0, 4),
                       ),
